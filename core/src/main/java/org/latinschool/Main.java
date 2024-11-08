@@ -29,7 +29,7 @@ public class Main extends ApplicationAdapter {
     @Override
     public void create() {
         s = "";
-        font = new BitmapFont(Gdx.files.internal("font.fnt"));
+        font = new BitmapFont(Gdx.files.internal("ihnDehndwIxFP3fS_c1mSbr4.ttf.fnt"));
         shape = new ShapeRenderer();
         batch = new SpriteBatch();
         player = new Player(130, 150, 20);
@@ -39,7 +39,7 @@ public class Main extends ApplicationAdapter {
             balloons.add(new Balloon(25+20*i + 100*(i/3),150+30*(i%3)*(2-(i % 3)),15,"" + (i%3+1)));
         }
         for (int i = 0; i < 3; i++) {
-            goalBalloons.add(new Balloon(400+20*i,300+30*i*(2-(i%3)),15,"x"));
+            goalBalloons.add(new Balloon(400+20*i,300+30*i*(2-(i%3)),15,"" +(i+1)));
         }
         Gdx.gl.glClearColor(0.8f, 0.792f, 0.761f,1f);
     }
@@ -67,9 +67,12 @@ public class Main extends ApplicationAdapter {
         font.getData().setScale(5);
         font.setColor(Color.BLACK);
         font.draw(batch,s,250,250);
-        font.getData().setScale(1);
+        font.getData().setScale(0.8f);
         for (Balloon balloon : balloons) {
             font.draw(batch,balloon.num,balloon.x- 2*(float) balloon.size /5,balloon.y+ (float) balloon.size /2);
+        }
+        for (Balloon balloon : goalBalloons) {
+            font.draw(batch,balloon.num,balloon.x-2*(float) balloon.size /5, balloon.y + (float) balloon.size /2);
         }
         batch.end();
     }
