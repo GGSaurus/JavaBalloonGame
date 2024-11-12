@@ -24,15 +24,19 @@ public class Main extends ApplicationAdapter {
     ArrayList<Balloon> balloons;
     BitmapFont font;
     String s;
-    String num;
+    int num;
     int length;
     ArrayList<Customer> customers;
+    float autoTime;
+    float time;
 
     @Override
     public void create() {
+        autoTime = 5.0f;
+        time = 0;
         length = 3;
         s = "";
-        num = "Count: ";
+        num = 0;
         font = new BitmapFont(Gdx.files.internal("WUADS_HXd50qla1XGisjIeiq.TTF.fnt"));
         shape = new ShapeRenderer();
         batch = new SpriteBatch();
@@ -51,6 +55,8 @@ public class Main extends ApplicationAdapter {
     @Override
     public void render() {
         input();
+        logic();
+        time += Gdx.graphics.getDeltaTime();
         Gdx.gl.glClear(16384);
         Gdx.gl20.glLineWidth(10);
         shape.begin(ShapeRenderer.ShapeType.Line);
@@ -82,8 +88,8 @@ public class Main extends ApplicationAdapter {
         font.getData().setScale(1);
         font.setColor(Color.BLACK);
         font.draw(batch,s,200,300);
-        font.getData().setScale(.5f);
-        font.draw(batch,"",20,200);
+        font.getData().setScale(.4f);
+        font.draw(batch,"Count: " + num,20,450);
         font.getData().setScale(0.2f);
         for (Balloon balloon : balloons) {
             font.draw(batch,balloon.num,balloon.x-2*(float) balloon.size / 5,balloon.y + (float) balloon.size / 2);
@@ -95,7 +101,20 @@ public class Main extends ApplicationAdapter {
         }
         batch.end();
     }
-
+    private void logic() {
+        if (time > autoTime) {
+            Customer lastCustomer;
+            lastCustomer = new Customer(0,0,0);
+            if (!customers.isEmpty()) {
+                lastCustomer = customers.get(customers.size()-1);
+                customers.add(new Customer(lastCustomer.x+100,lastCustomer.y,lastCustomer.size));
+            }
+            else {
+                customers.add(new Customer(350,150,20));
+            }
+            time -= autoTime;
+        }
+    }
     private void input() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
             Color temp = balloons.get(0).color;
@@ -139,6 +158,7 @@ public class Main extends ApplicationAdapter {
                 }
                 if (yes) {
                     match();
+                    s = "";
                 }
                 else {
                     s = "No";
@@ -153,6 +173,7 @@ public class Main extends ApplicationAdapter {
                 }
                 if (yes) {
                     match();
+                    s = "";
                 }
                 else {
                     s = "No";
@@ -181,7 +202,7 @@ public class Main extends ApplicationAdapter {
                 balloon.x -= 100;
             }
         }
-        customers.add(new Customer(customers.get(customers.size()-1).x+100,customers.get(customers.size()-1).y,customers.get(customers.size()-1).size));
+        num +=1;
     }
 
     @Override
