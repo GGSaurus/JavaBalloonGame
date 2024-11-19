@@ -34,13 +34,16 @@ public class DifficultyScreen extends ScreenAdapter {
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
             if (x > (float) Gdx.graphics.getWidth() / 2 - 100 && x < (float) Gdx.graphics.getWidth() / 2 - 100 + 200 && Gdx.graphics.getHeight() - y > Gdx.graphics.getHeight() / 2 + 70 && Gdx.graphics.getHeight() - y < Gdx.graphics.getHeight() / 2 + 130) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreen(game,10));
+                System.out.println("easy");
             }
             if (x > (float) Gdx.graphics.getWidth() / 2 - 100 && x < (float) Gdx.graphics.getWidth() / 2 - 100 + 200 && Gdx.graphics.getHeight() - y > Gdx.graphics.getHeight() / 2 - 30 && Gdx.graphics.getHeight() - y < Gdx.graphics.getHeight() / 2 + 30) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreen(game, 7.5F));
+                System.out.println("normal");
             }
             if (x > (float) Gdx.graphics.getWidth() / 2 - 100 && x < (float) Gdx.graphics.getWidth() / 2 - 100 + 200 && Gdx.graphics.getHeight() - y > Gdx.graphics.getHeight() / 2 - 130 && Gdx.graphics.getHeight() - y < Gdx.graphics.getHeight() / 2 - 70) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new GameScreen(game,5));
+                System.out.println("hard");
             }
         }
     }

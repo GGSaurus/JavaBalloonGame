@@ -22,13 +22,36 @@ public class GameScreen extends ScreenAdapter {
     ArrayList<Customer> customers;
     float autoTime;
     float time;
-    Texture texture;
+    Texture error;
+    Texture rotate;
     Player player;
     ArrayList<Balloon> balloons;
     public GameScreen(Main game) {
         this.game = game;
-        texture = new Texture(Gdx.files.internal("file.png"));
+        error = new Texture(Gdx.files.internal("file.png"));
+        rotate = new Texture(Gdx.files.internal("rotate.png"));
         autoTime = 8.0f;
+        time = 0;
+        length = 3;
+        s = "";
+        num = 0;
+        numWrong = 0;
+        player = new Player(130, 150, 20);
+        balloons = new ArrayList<>();
+        customers = new ArrayList<>();
+        for (int i = 0; i < length * 2; i++) {
+            balloons.add(new Balloon(25+20*i + 100*(i/3),150+30*(i%3)*(2-(i % 3)),15,"" + (i%3+1)));
+        }
+        for (int i = 0; i < 5; i++) {
+            customers.add(new Customer(350+100*i,150,20));
+        }
+        Gdx.gl.glClearColor(0.8f, 0.792f, 0.761f,1f);
+    }
+    public GameScreen(Main game, float t) {
+        this.game = game;
+        error = new Texture(Gdx.files.internal("file.png"));
+        rotate = new Texture(Gdx.files.internal("rotate.png"));
+        autoTime = t;
         time = 0;
         length = 3;
         s = "";
@@ -49,7 +72,7 @@ public class GameScreen extends ScreenAdapter {
     public void render(float delta) {
         input();
         logic();
-        time += Gdx.graphics.getDeltaTime();
+        time += delta;
         Gdx.gl.glClear(16384);
         Gdx.gl20.glLineWidth(10);
         game.shape.begin(ShapeRenderer.ShapeType.Line);
@@ -70,10 +93,10 @@ public class GameScreen extends ScreenAdapter {
                 balloon.draw(game.shape);
             }
         }
-        game.shape.setColor(.3f,0,0,1);
+        game.shape.setColor(.2f,.1f,1,1);
         game.shape.rect(20,30,80,50);
         game.shape.rect(160,30,80,50);
-        game.shape.setColor(0,.3f,.3f,1);
+        game.shape.setColor(0,.7f,.2f,1);
         game.shape.rect(40,100,40,20);
         game.shape.rect(180,100,40,20);
         game.shape.end();
@@ -94,8 +117,13 @@ public class GameScreen extends ScreenAdapter {
             }
         }
         for (int i=0;i<numWrong;i++) {
-            game.batch.draw(texture,400+50*i,400, (float) Gdx.graphics.getWidth()/10, (float) Gdx.graphics.getWidth()*9/10/16);
+            game.batch.draw(error,400+50*i,400, (float) Gdx.graphics.getWidth()/10, (float) Gdx.graphics.getWidth()*9/10/16);
         }
+        game.font.getData().setScale(.3f);
+        game.font.draw(game.batch,"Sell",28,65);
+        game.font.draw(game.batch,"Sell",168,65);
+        game.batch.draw(rotate,50,103,20, (float) 20 /225*164);
+        game.batch.draw(rotate,190,103,20, (float) 20 /225*164);
         game.batch.end();
     }
     private void logic() {
