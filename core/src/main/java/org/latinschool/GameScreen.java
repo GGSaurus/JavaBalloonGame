@@ -88,12 +88,7 @@ public class GameScreen extends ScreenAdapter {
         for (Balloon balloon : balloons) {
             balloon.draw(game.shape);
         }
-        for (Customer customer : customers) {
-            for (Balloon balloon : customer.goal) {
-                balloon.draw(game.shape);
-            }
-        }
-        game.shape.setColor(.2f,.1f,1,1);
+        game.shape.setColor(.23f,.38f,.85f,1);
         game.shape.rect(20,30,80,50);
         game.shape.rect(160,30,80,50);
         game.shape.setColor(0,.7f,.2f,1);
@@ -185,11 +180,9 @@ public class GameScreen extends ScreenAdapter {
                     }
                 }
                 if (yes) {
-                    match();
-                    s = "";
+                    match(0);
                 }
                 else {
-                    s = "";
                     numWrong +=1;
                 }
             }
@@ -201,11 +194,9 @@ public class GameScreen extends ScreenAdapter {
                     }
                 }
                 if (yes) {
-                    match();
-                    s = "";
+                    match(1);
                 }
                 else {
-                    s = "";
                     numWrong +=1;
                 }
             }
@@ -223,12 +214,25 @@ public class GameScreen extends ScreenAdapter {
             }
         }
     }
-    private void match() {
+    private void match(int n) {
         customers.remove(0);
         for (Customer customer : customers) {
             customer.x -= 100;
             for (Balloon balloon : customer.goal) {
                 balloon.x -= 100;
+            }
+        }
+        for (int i = 0; i < length; i++) {
+            switch(random.nextInt(3)) {
+                case 0:
+                    balloons.get(i+n*3).color = Color.RED;
+                    break;
+                case 1:
+                    balloons.get(i+n*3).color = Color.GREEN;
+                    break;
+                case 2:
+                    balloons.get(i+n*3).color = Color.BLUE;
+                    break;
             }
         }
         num +=1;

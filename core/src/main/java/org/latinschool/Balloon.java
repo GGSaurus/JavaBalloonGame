@@ -26,8 +26,16 @@ public class Balloon {
                 break;
         }
     }
+    public Balloon(int x, int y, int size, String num, Color color) {
+        this.x = x;
+        this.y = y;
+        this.size = size;
+        this.num = num;
+        this.color = color;
+    }
 
     public void draw(ShapeRenderer shape) {
+        shape.set(ShapeRenderer.ShapeType.Filled);
         shape.setColor(color);
         shape.circle(x, y, size);
 

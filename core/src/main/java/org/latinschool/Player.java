@@ -12,6 +12,7 @@ public class Player {
     }
 
     public void draw(ShapeRenderer shape) {
+        shape.setColor(0,0,0,1);
         shape.circle(x,y,size);
         shape.line(x,y-size,x,y-(5*size));
         shape.line(x,y-(3*size),x-(2*size),y-(2*size));

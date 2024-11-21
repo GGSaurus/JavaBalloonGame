@@ -16,6 +16,7 @@ public class DifficultyScreen extends ScreenAdapter {
     public void render(float delta) {
         Gdx.gl.glClear(16384);
         game.shape.begin(ShapeRenderer.ShapeType.Filled);
+        game.shape.setColor(1,1,1,1);
         game.shape.rect((float) Gdx.graphics.getWidth() / 2 - 100, (float) Gdx.graphics.getHeight() / 2 + 70, 200, 60);
         game.shape.rect((float) Gdx.graphics.getWidth() / 2 - 100, (float) Gdx.graphics.getHeight() / 2 - 30, 200, 60);
         game.shape.rect((float) Gdx.graphics.getWidth() / 2 - 100, (float) Gdx.graphics.getHeight() / 2 - 130, 200, 60);
@@ -38,7 +39,7 @@ public class DifficultyScreen extends ScreenAdapter {
                 System.out.println("easy");
             }
             if (x > (float) Gdx.graphics.getWidth() / 2 - 100 && x < (float) Gdx.graphics.getWidth() / 2 - 100 + 200 && Gdx.graphics.getHeight() - y > Gdx.graphics.getHeight() / 2 - 30 && Gdx.graphics.getHeight() - y < Gdx.graphics.getHeight() / 2 + 30) {
-                game.setScreen(new GameScreen(game, 7.5F));
+                game.setScreen(new GameScreen(game, 7.5f));
                 System.out.println("normal");
             }
             if (x > (float) Gdx.graphics.getWidth() / 2 - 100 && x < (float) Gdx.graphics.getWidth() / 2 - 100 + 200 && Gdx.graphics.getHeight() - y > Gdx.graphics.getHeight() / 2 - 130 && Gdx.graphics.getHeight() - y < Gdx.graphics.getHeight() / 2 - 70) {

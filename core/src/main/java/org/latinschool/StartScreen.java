@@ -27,7 +27,7 @@ public class StartScreen extends ScreenAdapter {
         game.batch.begin();
         game.font.getData().setScale(.5f);
         game.font.draw(game.batch,str,(float) Gdx.graphics.getWidth() /2 - 200,(float) Gdx.graphics.getHeight() /2+150);
-        game.font.draw(game.batch,"Press Space\nto Start", (float) Gdx.graphics.getWidth() /2 - 200, (float) Gdx.graphics.getHeight() /2+50);
+        game.font.draw(game.batch,"Press Space\n to Start", (float) Gdx.graphics.getWidth() /2 - 160, (float) Gdx.graphics.getHeight() /2+50);
         game.batch.end();
     }
     @Override
@@ -36,7 +36,7 @@ public class StartScreen extends ScreenAdapter {
             @Override
             public boolean keyDown(int keyCode) {
                 if (keyCode == Input.Keys.SPACE) {
-                    game.setScreen(new DifficultyScreen(game));
+                    game.setScreen(new InstructionScreen(game));
                 }
                 return true;
             }

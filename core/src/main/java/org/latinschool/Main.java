@@ -37,6 +37,7 @@ public class Main extends Game {
     public void create() {
         font = new BitmapFont(Gdx.files.internal("WUADS_HXd50qla1XGisjIeiq.TTF.fnt"));
         shape = new ShapeRenderer();
+        shape.setAutoShapeType(true);
         batch = new SpriteBatch();
         setScreen(new StartScreen(this));
     }
