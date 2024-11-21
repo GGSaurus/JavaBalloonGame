@@ -124,7 +124,6 @@ public class GameScreen extends ScreenAdapter {
     private void logic() {
         if (time > autoTime) {
             Customer lastCustomer;
-            lastCustomer = new Customer(0,0,0);
             if (!customers.isEmpty()) {
                 lastCustomer = customers.get(customers.size()-1);
                 customers.add(new Customer(lastCustomer.x+100,lastCustomer.y,lastCustomer.size));
