@@ -177,6 +177,7 @@ public class GameScreen extends ScreenAdapter {
                 for (int i = 0; i < customers.get(0).goal.size(); i++) {
                     if (!(balloons.get(i).color == customers.get(0).goal.get(i).color)) {
                         yes = false;
+                        break;
                     }
                 }
                 if (yes) {
@@ -191,6 +192,7 @@ public class GameScreen extends ScreenAdapter {
                 for (int i = 0; i < customers.get(0).goal.size(); i++) {
                     if (!(balloons.get(i+customers.get(0).goal.size()).color == customers.get(0).goal.get(i).color)) {
                         yes = false;
+                        break;
                     }
                 }
                 if (yes) {

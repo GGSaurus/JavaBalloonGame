@@ -3,14 +3,12 @@ package org.latinschool;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Colors;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.ArrayList;
 
 public class InstructionScreen extends ScreenAdapter {
     Main game;
-    float time;
     Customer player;
     Customer customer;
     Customer customer2;

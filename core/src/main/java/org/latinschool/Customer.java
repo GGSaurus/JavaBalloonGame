@@ -14,7 +14,7 @@ public class Customer {
         this.x = x;
         this.y = y;
         this.size = size;
-        goal = new ArrayList<Balloon>();
+        goal = new ArrayList<>();
         for (int i = 0; i < length; i++) {
             goal.add(new Balloon(x-20+20*i,y+50+30*i*(2-(i%3)),15,"" +(i+1)));
         }
@@ -23,7 +23,7 @@ public class Customer {
         this.x = x;
         this.y = y;
         this.size = size;
-        goal = new ArrayList<Balloon>();
+        goal = new ArrayList<>();
         for (int i = 0; i < length; i++) {
             goal.add(new Balloon(x-20+20*i,y+50+30*i*(2-(i%3)),15,"" +(i+1),colors.get(i)));
         }
