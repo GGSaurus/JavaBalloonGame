@@ -213,6 +213,21 @@ public class GameScreen extends ScreenAdapter {
                 balloons.get(2+customers.get(0).goal.size()).color = balloons.get(1+customers.get(0).goal.size()).color;
                 balloons.get(1+customers.get(0).goal.size()).color = temp;
             }
+            else if(((Math.pow((x-balloons.get(0).x),2)+Math.pow(y-Gdx.graphics.getHeight()+balloons.get(0).y,2))<Math.pow(balloons.get(0).size,2))||((Math.pow((x-balloons.get(balloons.size()/2).x),2)+Math.pow(y-Gdx.graphics.getHeight()+balloons.get(balloons.size()/2).y,2))<Math.pow(balloons.get(balloons.size()/2).size,2))) {
+                Color temp = balloons.get(0).color;
+                balloons.get(0).color = balloons.get(balloons.size()/2).color;
+                balloons.get(balloons.size()/2).color = temp;
+            }
+            else if(((Math.pow((x-balloons.get(1).x),2)+Math.pow(y-Gdx.graphics.getHeight()+balloons.get(1).y,2))<Math.pow(balloons.get(1).size,2))||((Math.pow((x-balloons.get(balloons.size()/2+1).x),2)+Math.pow(y-Gdx.graphics.getHeight()+balloons.get(balloons.size()/2+1).y,2))<Math.pow(balloons.get(balloons.size()/2+1).size,2))) {
+                Color temp = balloons.get(1).color;
+                balloons.get(1).color = balloons.get(balloons.size()/2+1).color;
+                balloons.get(balloons.size()/2+1).color = temp;
+            }
+            else if(((Math.pow((x-balloons.get(2).x),2)+Math.pow(y-Gdx.graphics.getHeight()+balloons.get(2).y,2))<Math.pow(balloons.get(2).size,2))||((Math.pow((x-balloons.get(balloons.size()/2+2).x),2)+Math.pow(y-Gdx.graphics.getHeight()+balloons.get(balloons.size()/2+2).y,2))<Math.pow(balloons.get(balloons.size()/2+2).size,2))) {
+                Color temp = balloons.get(2).color;
+                balloons.get(2).color = balloons.get(balloons.size()/2+2).color;
+                balloons.get(balloons.size()/2+2).color = temp;
+            }
         }
     }
     private void match(int n) {
