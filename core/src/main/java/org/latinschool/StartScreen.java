@@ -9,15 +9,24 @@ import com.badlogic.gdx.ScreenAdapter;
 public class StartScreen extends ScreenAdapter {
     Main game;
     String str;
+    String easyHiScore;
+    String normalHiScore;
+    String hardHiScore;
     public StartScreen(Main game) {
         this.game = game;
         str = "";
+        easyHiScore = "None";
+        normalHiScore = "None";
+        hardHiScore = "None";
         Gdx.gl.glClearColor(0.8f, 0.792f, 0.761f,1f);
     }
-    public StartScreen(Main game, boolean lost) {
+    public StartScreen(Main game, boolean lost, int difficulty) {
         this.game = game;
         if (lost) {
             str = "You Lost!";
+        }
+        else {
+            str = "You Won!!";
         }
         Gdx.gl.glClearColor(0.8f, 0.792f, 0.761f,1f);
     }

@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.ArrayList;
@@ -22,10 +23,12 @@ public class GameScreen extends ScreenAdapter {
     ArrayList<Customer> customers;
     float autoTime;
     float time;
+    float timer;
     Texture error;
     Texture rotate;
     Player player;
     ArrayList<Balloon> balloons;
+    int difficulty;
     public GameScreen(Main game) {
         this.game = game;
         error = new Texture(Gdx.files.internal("file.png"));
@@ -47,11 +50,22 @@ public class GameScreen extends ScreenAdapter {
         }
         Gdx.gl.glClearColor(0.8f, 0.792f, 0.761f,1f);
     }
-    public GameScreen(Main game, float t) {
+    public GameScreen(Main game, int difficulty) {
         this.game = game;
         error = new Texture(Gdx.files.internal("file.png"));
         rotate = new Texture(Gdx.files.internal("rotate.png"));
-        autoTime = t;
+        this.difficulty = difficulty;
+        switch(difficulty) {
+            case 1:
+                autoTime = 15;
+                break;
+            case 2:
+                autoTime = 10;
+                break;
+            case 3:
+                autoTime = 7.5f;
+                break;
+        }
         time = 0;
         length = 3;
         s = "";
@@ -73,6 +87,7 @@ public class GameScreen extends ScreenAdapter {
         input();
         logic();
         time += delta;
+        timer += delta;
         Gdx.gl.glClear(16384);
         Gdx.gl20.glLineWidth(10);
         game.shape.begin(ShapeRenderer.ShapeType.Line);
@@ -102,6 +117,7 @@ public class GameScreen extends ScreenAdapter {
         game.font.getData().setScale(.2f);
         game.font.draw(game.batch,"Count: " + num,20,450);
         game.font.draw(game.batch,"Customers Remaining: " + customers.size(), 20,400);
+        game.font.draw(game.batch,"Timer: "+Float.toString(timer).split("\\.")[0]+"."+Float.toString(timer).split("\\.")[1].charAt(0),400,400);
         game.font.getData().setScale(0.2f);
         for (Balloon balloon : balloons) {
             game.font.draw(game.batch,balloon.num,balloon.x-2*(float) balloon.size / 5,balloon.y + (float) balloon.size / 2);
@@ -134,7 +150,11 @@ public class GameScreen extends ScreenAdapter {
             time -= autoTime;
         }
         if (numWrong >= 3) {
-            game.setScreen(new StartScreen(game,true));
+            game.setScreen(new StartScreen(game,true,difficulty));
+        }
+        if (customers.isEmpty()) {
+            System.out.println("Win!!");
+            game.setScreen(new StartScreen(game,false,difficulty));
         }
     }
     private void input() {

@@ -12,6 +12,9 @@ public class Main extends Game {
     SpriteBatch batch;
     ShapeRenderer shape;
     BitmapFont font;
+    String easyHiScore;
+    String normalHiScore;
+    String hardHiScore;
 
     @Override
     public void create() {
@@ -19,6 +22,9 @@ public class Main extends Game {
         shape = new ShapeRenderer();
         shape.setAutoShapeType(true);
         batch = new SpriteBatch();
+        easyHiScore = "None";
+        normalHiScore = "None";
+        hardHiScore = "None";
         setScreen(new StartScreen(this));
     }
 
