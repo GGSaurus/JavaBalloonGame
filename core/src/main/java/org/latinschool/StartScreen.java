@@ -9,15 +9,13 @@ import com.badlogic.gdx.ScreenAdapter;
 public class StartScreen extends ScreenAdapter {
     Main game;
     String str;
-    String easyHiScore;
-    String normalHiScore;
-    String hardHiScore;
+
     public StartScreen(Main game) {
         this.game = game;
         str = "";
-        easyHiScore = "None";
-        normalHiScore = "None";
-        hardHiScore = "None";
+        game.easyHiScore = "None";
+        game.normalHiScore = "None";
+        game.hardHiScore = "None";
         Gdx.gl.glClearColor(0.8f, 0.792f, 0.761f,1f);
     }
     public StartScreen(Main game, boolean lost, int difficulty) {
@@ -27,6 +25,25 @@ public class StartScreen extends ScreenAdapter {
         }
         else {
             str = "You Won!!";
+        }
+        Gdx.gl.glClearColor(0.8f, 0.792f, 0.761f,1f);
+    }
+    public StartScreen(Main game, boolean lost, int difficulty, float timer) {
+        this.game = game;
+        if (lost) {
+            str = "You Lost!";
+        }
+        else {
+            str = "You Won!!";
+            if (difficulty == 1 && (game.easyHiScore == "None" || timer < Float.parseFloat(game.easyHiScore))) {
+                game.easyHiScore = Float.toString(timer);
+            }
+            if (difficulty == 2 && (game.normalHiScore == "None" || timer < Float.parseFloat(game.normalHiScore))) {
+                game.normalHiScore = Float.toString(timer);
+            }
+            if (difficulty == 3 && (game.hardHiScore == "None" || timer < Float.parseFloat(game.hardHiScore))) {
+                game.hardHiScore = Float.toString(timer);
+            }
         }
         Gdx.gl.glClearColor(0.8f, 0.792f, 0.761f,1f);
     }
@@ -45,7 +62,7 @@ public class StartScreen extends ScreenAdapter {
             @Override
             public boolean keyDown(int keyCode) {
                 if (keyCode == Input.Keys.SPACE) {
-                    game.setScreen(new DifficultyScreen(game));
+                    game.setScreen(new InstructionScreen(game));
                 }
                 return true;
             }

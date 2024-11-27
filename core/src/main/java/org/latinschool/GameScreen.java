@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import static com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled;
 import static com.badlogic.gdx.math.MathUtils.random;
+import static com.badlogic.gdx.math.MathUtils.round;
 
 public class GameScreen extends ScreenAdapter {
     Main game;
@@ -31,6 +32,7 @@ public class GameScreen extends ScreenAdapter {
     int difficulty;
     public GameScreen(Main game) {
         this.game = game;
+        game.music.play();
         error = new Texture(Gdx.files.internal("file.png"));
         rotate = new Texture(Gdx.files.internal("rotate.png"));
         autoTime = 8.0f;
@@ -52,6 +54,7 @@ public class GameScreen extends ScreenAdapter {
     }
     public GameScreen(Main game, int difficulty) {
         this.game = game;
+        game.music.play();
         error = new Texture(Gdx.files.internal("file.png"));
         rotate = new Texture(Gdx.files.internal("rotate.png"));
         this.difficulty = difficulty;
@@ -109,13 +112,16 @@ public class GameScreen extends ScreenAdapter {
         game.shape.setColor(0,.7f,.2f,1);
         game.shape.rect(40,100,40,20);
         game.shape.rect(180,100,40,20);
+        game.shape.setColor(.89f,.16f,.06f,1);
+        game.shape.rect(20,210,80,50);
+        game.shape.rect(160,210,80,50);
         game.shape.end();
         game.batch.begin();
         game.font.getData().setScale(1);
         game.font.setColor(Color.BLACK);
         game.font.draw(game.batch,s,200,300);
         game.font.getData().setScale(.2f);
-        game.font.draw(game.batch,"Count: " + num,20,450);
+        game.font.draw(game.batch,"Completed: " + num,20,450);
         game.font.draw(game.batch,"Customers Remaining: " + customers.size(), 20,400);
         game.font.draw(game.batch,"Timer: "+Float.toString(timer).split("\\.")[0]+"."+Float.toString(timer).split("\\.")[1].charAt(0),400,400);
         game.font.getData().setScale(0.2f);
@@ -131,8 +137,11 @@ public class GameScreen extends ScreenAdapter {
             game.batch.draw(error,400+50*i,400, (float) Gdx.graphics.getWidth()/10, (float) Gdx.graphics.getWidth()*9/10/16);
         }
         game.font.getData().setScale(.3f);
-        game.font.draw(game.batch,"Sell",28,65);
-        game.font.draw(game.batch,"Sell",168,65);
+        game.font.draw(game.batch,"Sell",27,65);
+        game.font.draw(game.batch,"Sell",167,65);
+        game.font.getData().setScale(.2f);
+        game.font.draw(game.batch,"Reset",30,242);
+        game.font.draw(game.batch,"Reset",170,242);
         game.batch.draw(rotate,50,103,20, (float) 20 /225*164);
         game.batch.draw(rotate,190,103,20, (float) 20 /225*164);
         game.batch.end();
@@ -153,44 +162,15 @@ public class GameScreen extends ScreenAdapter {
             game.setScreen(new StartScreen(game,true,difficulty));
         }
         if (customers.isEmpty()) {
-            System.out.println("Win!!");
-            game.setScreen(new StartScreen(game,false,difficulty));
+            game.setScreen(new StartScreen(game,false,difficulty, (float) round(timer * 10) /10));
         }
     }
     private void input() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-            Color temp = balloons.get(0).color;
-            balloons.get(0).color = balloons.get(customers.get(0).goal.size()).color;
-            balloons.get(customers.get(0).goal.size()).color = temp;
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_2)) {
-            Color temp = balloons.get(1).color;
-            balloons.get(1).color = balloons.get(1+customers.get(0).goal.size()).color;
-            balloons.get(1+customers.get(0).goal.size()).color = temp;
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_3)) {
-            Color temp = balloons.get(2).color;
-            balloons.get(2).color = balloons.get(2+customers.get(0).goal.size()).color;
-            balloons.get(2+customers.get(0).goal.size()).color = temp;
-        }
-        else if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            for (int i = 0; i < customers.get(0).goal.size(); i++) {
-                switch(random.nextInt(3)) {
-                    case 0:
-                        balloons.get(i).color = Color.RED;
-                        break;
-                    case 1:
-                        balloons.get(i).color = Color.GREEN;
-                        break;
-                    case 2:
-                        balloons.get(i).color = Color.BLUE;
-                        break;
-                }
-            }
-        }
         if (Gdx.input.justTouched()) {
             int x = Gdx.input.getX();
             int y = Gdx.input.getY();
+            System.out.println(x+" "+(480-y));
+            System.out.println(x+" "+Gdx.graphics.getHeight());
             if (x < 100 && x > 20 && (Gdx.graphics.getHeight() - y) > 30 && (Gdx.graphics.getHeight() - y) < 80) {
                 boolean yes = true;
                 for (int i = 0; i < customers.get(0).goal.size(); i++) {
@@ -232,6 +212,36 @@ public class GameScreen extends ScreenAdapter {
                 balloons.get(customers.get(0).goal.size()).color = balloons.get(2+customers.get(0).goal.size()).color;
                 balloons.get(2+customers.get(0).goal.size()).color = balloons.get(1+customers.get(0).goal.size()).color;
                 balloons.get(1+customers.get(0).goal.size()).color = temp;
+            }
+            else if(x<100 && x>20 && (Gdx.graphics.getHeight()-y)>210 && (Gdx.graphics.getHeight()-y)<260) {
+                for (int i = 0; i < customers.get(0).goal.size(); i++) {
+                    switch(random.nextInt(3)) {
+                        case 0:
+                            balloons.get(i).color = Color.RED;
+                            break;
+                        case 1:
+                            balloons.get(i).color = Color.GREEN;
+                            break;
+                        case 2:
+                            balloons.get(i).color = Color.BLUE;
+                            break;
+                    }
+                }
+            }
+            else if(x<240 && x>160 && (Gdx.graphics.getHeight()-y)>210 && (Gdx.graphics.getHeight()-y)<260) {
+                for (int i = 0; i < customers.get(0).goal.size(); i++) {
+                    switch(random.nextInt(3)) {
+                        case 0:
+                            balloons.get(i+length).color = Color.RED;
+                            break;
+                        case 1:
+                            balloons.get(i+length).color = Color.GREEN;
+                            break;
+                        case 2:
+                            balloons.get(i+length).color = Color.BLUE;
+                            break;
+                    }
+                }
             }
             else if(((Math.pow((x-balloons.get(0).x),2)+Math.pow(y-Gdx.graphics.getHeight()+balloons.get(0).y,2))<Math.pow(balloons.get(0).size,2))||((Math.pow((x-balloons.get(balloons.size()/2).x),2)+Math.pow(y-Gdx.graphics.getHeight()+balloons.get(balloons.size()/2).y,2))<Math.pow(balloons.get(balloons.size()/2).size,2))) {
                 Color temp = balloons.get(0).color;

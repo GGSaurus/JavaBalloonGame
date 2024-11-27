@@ -3,6 +3,7 @@ package org.latinschool;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -15,6 +16,7 @@ public class Main extends Game {
     String easyHiScore;
     String normalHiScore;
     String hardHiScore;
+    Music music;
 
     @Override
     public void create() {
@@ -25,6 +27,7 @@ public class Main extends Game {
         easyHiScore = "None";
         normalHiScore = "None";
         hardHiScore = "None";
+        music = Gdx.audio.newMusic(Gdx.files.internal("BalloonGame.wav"));
         setScreen(new StartScreen(this));
     }
 
